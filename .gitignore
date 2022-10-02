@@ -112,6 +112,7 @@ venv.bak/
 
 .idea/
 migrations/
+_media/
 
 # Spyder project settings
 .spyderproject
