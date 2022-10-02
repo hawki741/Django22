@@ -7,10 +7,12 @@ class PostList(ListView):
     model = Post
     ordering = '-pk'
     # 템플릿은 모델명_list.html
+    # 매개변수는 모델명_list
 
 class PostDetail(DetailView):
     model = Post
     #템플릿은 모델명_detail.html
+    # 매개변수는 모델명
 
 #def index(request):
 #    posts = Post.objects.all().order_by('-pk')
