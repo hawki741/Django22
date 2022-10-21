@@ -44,6 +44,22 @@ class TestView(TestCase):
         self.assertIn(f'{self.category_edu.name} ({self.category_edu.post_set.count()})', category_card.text)
         self.assertIn(f'미분류 (1)', category_card.text)
 
+    def test_category_page(self):
+        response = self.client.get(self.category_com.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        self.nav_test(soup)
+        self.category_test(soup)
+
+        self.assertIn(self.category_com.name, soup.h1.text)
+
+        main_area = soup.find('div', id='main-area')
+        self.assertIn(self.category_com.name, main_area.text)
+        self.assertIn(self.post_001.title, main_area.text)
+        self.assertNotIn(self.post_002.title, main_area.text)
+        self.assertNotIn(self.post_003.title, main_area.text)
+
     def test_post_list(self):
         #2 포스트 추가
 

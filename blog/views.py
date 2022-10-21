@@ -1,4 +1,4 @@
-#from django.shortcuts import render
+from django.shortcuts import render
 from .models import Post, Category
 from django.views.generic import ListView, DetailView
 
@@ -25,6 +25,15 @@ class PostDetail(DetailView):
         return context
     #템플릿은 모델명_detail.html
     # 매개변수는 모델명
+
+def category_page(request, slug):
+    category = Category.objects.get(slug=slug)
+    return render(request, 'blog/post_list.html', {
+        'category' : category,
+        'post_list' : Post.objects.filter(category=category),
+        'categories' : Category.objects.all(),
+        'no_category_post_count' : Post.objects.filter(category=None).count
+    })
 
 #def index(request):
 #    posts = Post.objects.all().order_by('-pk')
