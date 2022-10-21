@@ -16,11 +16,11 @@
           <div class="card-body">
             <div class="row">
 
-                <ul class="list-unstyled mb-0">
+                <ul>
                   {% for c in categories %}
                     <li><a href="#!">{{c}} ({{c.post_set.count}})</a></li>
                   {% endfor %}
-                    <li><a href="#!">미분류 ({{no_category_post_count}})</li>
+                    <li><a href="#!">미분류 ({{no_category_post_count}})</a></li>
                 </ul>
 
             </div>
