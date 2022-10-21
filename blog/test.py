@@ -114,3 +114,4 @@ class TestView(TestCase):
         self.assertIn(self.post_001.title, post_area.text)
         self.assertIn(self.post_001.content, post_area.text)
         self.assertIn(self.user_001.username.upper(), post_area.text)
+        self.assertIn(self.post_001.category.name, post_area.text)
