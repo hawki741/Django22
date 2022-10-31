@@ -11,9 +11,9 @@
                         <header class="mb-4">
                             <!-- Post categories-->
                             {% if post.category %}
-                            <span class="badge badge-secondary float-right">{{post.category}}</span>
+                            <span class="badge badge-secondary float-right"><a href="{{post.category.get_absolute_url}}">{{post.category}}</a></span>
                             {% else %}
-                            <span class="badge badge-secondary float-right">미분류</span>
+                            <span class="badge badge-secondary float-right"><a href="/blog/category/no_category/">미분류</a></span>
                             {% endif %}
                             <!-- Post title-->
                             <h1 class="fw-bolder mb-1">{{post.title| upper}}</h1>
