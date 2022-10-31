@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Post, Category, Tag
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
 # Create your views here.
 class PostList(ListView):
@@ -25,6 +25,17 @@ class PostDetail(DetailView):
         return context
     #템플릿은 모델명_detail.html
     # 매개변수는 모델명
+
+class PostCreate(CreateView):
+    model = Post
+    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']
+
+    # 템플릿은 모델명_form.html
+    def get_context_data(self, **kwargs):
+        context = super(PostCreate, self).get_context_data()
+        context['categories'] = Category.objects.all()
+        context['no_category_post_count'] = Post.objects.filter(category=None).count
+        return context
 
 def category_page(request, slug):
     if slug == 'no_category' :
