@@ -5,6 +5,9 @@
           {% if category %}
             <span class="badge badge-secondary">{{category}}</span>
           {% endif %}
+          {% if tag %}
+            <i class="fas fa-tags"></i><span class="badge badge-secondary">{{tag}}</span>
+          {% endif %}
         </h1>
         <!-- Featured blog post-->
         {% if post_list.exists %}
@@ -29,7 +32,7 @@
             {% if p.tags.exists %}
               <i class="fas fa-tags"></i>
               {% for tag in p.tags.iterator %}
-                <span class="badge badge-pill badge-light"><a href="#">{{tag}}</a></span>
+                <span class="badge badge-pill badge-light"><a href="{{tag.get_absolute_url}}">{{tag}}</a></span>
               {% endfor %}
               <br><br>
             {% endif %}
