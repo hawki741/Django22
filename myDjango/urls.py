@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [ # IP주소
     path('admin/', admin.site.urls),        # IP주소/admin
     path('blog/', include('blog.urls')),    # IP주소/blog
+    path('markdownx/', include('markdownx.urls')),
     path('', include('single_pages.urls'))  # IP주소
 ]
 
