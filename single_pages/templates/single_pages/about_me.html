@@ -9,6 +9,7 @@
   <link href="{% static 'blog/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen">
   <link href="{% static 'single_pages/css/about.css' %}" rel="stylesheet" type="text/css" media="screen">
   <script src="https://kit.fontawesome.com/54c8fd0744.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 <body>
   {% include 'blog/navbar.html' %}
@@ -35,8 +36,148 @@
           <h1>PORTFOLIO</h1>
         </div>
       </div>
+      <div class="row">
+        <div class="col-4">
+          <div class="card" data-toggle="modal" data-target="#portfolio1">
+            <img class="card-img-top" src="{% static 'single_pages/images/automation_python.png' %}">
+            <div class="card-body">
+              <h5 class="card-title">첫번째 포트폴리오</h5>
+              <p>첫번째 포트폴리오입니다.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card" data-toggle="modal" data-target="#portfolio2">
+            <img class="card-img-top" src="{% static 'single_pages/images/inflearn_django2.png' %}">
+            <div class="card-body">
+              <h5 class="card-title">두번째 포트폴리오</h5>
+              <p>두번째 포트폴리오입니다.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card" data-toggle="modal" data-target="#portfolio3">
+            <canvas class="card-img-top" id="myChart2"></canvas>
+            <div class="card-body">
+              <h5 class="card-title">세번째 포트폴리오</h5>
+              <p>세번째 포트폴리오입니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
+
+   <!-- Modal -->
+  <div class="modal fade" id="portfolio1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-right-to-bracket"></i>포트폴리오1</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-6">
+              <img class="card-img-top" src="{% static 'single_pages/images/automation_python.png' %}">
+            </div>
+            <div class="col-6">
+              <h5 class="card-title">첫번째 포트폴리오</h5>
+              <p>첫번째 포트폴리오입니다.</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="portfolio2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel2"><i class="fa-solid fa-right-to-bracket"></i>포트폴리오2</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="portfolio3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel3"><i class="fa-solid fa-right-to-bracket"></i>포트폴리오2</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <h5># of Votes</h5>
+              <table class="table table-bordered table-striped">
+                <tr><th>Colors</th><th>Numbers</th></tr>
+                <tr><td>Red</td><td>12</td></tr>
+                <tr><td>Blue</td><td>19</td></tr>
+                <tr><td>Yellow</td><td>3</td></tr>
+                <tr><td>Green</td><td>5</td></tr>
+                <tr><td>Purple</td><td>2</td></tr>
+                <tr><td>Orange</td><td>3</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script>
+      data = {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{ label: '# of Votes', data: [12, 19, 3, 5, 2, 3],
+          backgroundColor: [ 'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)' ],
+          borderColor: [ 'rgba(255, 99, 132, 1.0)', 'rgba(54, 162, 235, 1.0)', 'rgba(255, 206, 86, 1.0)', 'rgba(75, 192, 192, 1.0)', 'rgba(153, 102, 255, 1.0)', 'rgba(255, 159, 64, 1.0)' ],
+          borderWidth:1
+        }]
+      };
+      var ctx = document.getElementById('myChart');
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: {        }
+      } );
+      var ctx2 = document.getElementById('myChart2');
+      var myChart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: data,
+        options: {
+          scales: {
+            yAxes: [{ ticks: { beginAtZero: true } }]
+          }
+        }
+      } );
+
+    </script>
 
   <div class="fixed-bottom">
     {% include 'blog/footer.html' %}
