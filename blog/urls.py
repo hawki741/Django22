@@ -1,7 +1,7 @@
 from django.urls import path, include
 from . import views
 
-app_name = 'blog'
+#app_name = 'blog'
 
 urlpatterns = [ # IP주소/blog/
     #path('', views.index),
@@ -16,7 +16,7 @@ urlpatterns = [ # IP주소/blog/
     path('create_post/', views.PostCreate.as_view()),
     path('update_post/<int:pk>/', views.PostUpdate.as_view()),
     path('search/<str:q>/', views.PostSearch.as_view()),
-    path('test/', include('rest_framework.urls', namespace='rest_framework_category')),
+#    path('test/', include('rest_framework.urls', namespace='rest_framework_category')),
 ]
 
 

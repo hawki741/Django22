@@ -10,9 +10,11 @@ from django.db.models import Q
 from rest_framework import viewsets
 from .serializers import postSerializer
 
+
 class postViewSet(viewsets.ModelViewSet) :
     queryset = Post.objects.all()
     serializer_class = postSerializer
+
 
 # Create your views here.
 class PostList(ListView):
