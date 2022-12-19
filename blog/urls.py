@@ -15,6 +15,7 @@ urlpatterns = [ # IP주소/blog/
     path('tag/<str:slug>/', views.tag_page),
     path('create_post/', views.PostCreate.as_view()),
     path('update_post/<int:pk>/', views.PostUpdate.as_view()),
+    path('delete_post/<int:pk>/', views.delete_post),
     path('search/<str:q>/', views.PostSearch.as_view()),
 #    path('test/', include('rest_framework.urls', namespace='rest_framework_category')),
 ]

@@ -42,6 +42,14 @@ class PostDetail(DetailView):
     # 템플릿은 모델명_detail.html
     # 매개변수는 모델명
 
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.user.is_authenticated and request.user == post.author:
+        post.delete()
+        return redirect('/blog/')
+    else:
+        return PermissionDenied
+
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
     fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category'] # , 'tags'
