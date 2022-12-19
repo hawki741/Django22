@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import Post, Category, Tag, Comment
+from .models import Post, Category, Tag, Comment, CommentOfComment
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
-from .forms import CommentForm
+from .forms import CommentForm, CommentOfCommentForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from rest_framework import viewsets
@@ -38,6 +38,7 @@ class PostDetail(DetailView):
         context['categories'] = Category.objects.all()
         context['no_category_post_count'] = Post.objects.filter(category=None).count
         context['comment_form'] = CommentForm
+        context['commentofComment_form'] = CommentOfCommentForm
         return context
     # 템플릿은 모델명_detail.html
     # 매개변수는 모델명
@@ -200,6 +201,47 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user == self.get_object().author:
             return super(CommentUpdate,self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
+
+def new_commentofcomment(request,pk1,pk2):
+    if request.user.is_authenticated:
+        post = get_object_or_404(Post,pk=pk1)
+        parent = get_object_or_404(Comment, pk=pk2)
+        #포스트 모델에서 pk=pk인거 가지고 오기
+        if request.method == 'POST':
+            commentOfComment_form = CommentOfCommentForm(request.POST)
+            if commentOfComment_form.is_valid():
+                comment = commentOfComment_form.save(commit=False)
+                comment.parent_Comment = parent
+                comment.author = request.user
+                comment.save()
+                return redirect(post.get_absolute_url())
+        else: #GET으로 온 경우
+            return redirect(parent.get_absolute_url())
+    else:
+        raise PermissionDenied
+
+def delete_coc(request,pk):
+    coc = get_object_or_404(CommentOfComment, pk=pk)
+    parent = coc.parent_Comment.post
+
+    if request.user.is_authenticated and request.user == coc.author:
+        coc.delete()
+        return redirect(parent.get_absolute_url())
+    else:
+        PermissionDenied
+
+class CommentOfCommentUpdate(LoginRequiredMixin,UpdateView):
+    model = CommentOfComment
+    form_class = CommentOfCommentForm
+
+    # CreateView,UpdateView 이던지,,, form을 사용하면, 템플릿이 model명_forms로 자동을 만들어짐.
+    # 템플릿 모델명_forms : comment_form
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(CommentOfCommentUpdate, self).dispatch(request, *args, **kwargs)
         else:
             raise PermissionDenied
 

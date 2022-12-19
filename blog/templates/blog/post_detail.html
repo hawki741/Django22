@@ -150,13 +150,78 @@
                                                     {{comment.author.username}} <small class="text-muted">{{comment.created_at}}</small>
                                                 </div>
                                                 <p>{{comment.content | linebreaks}}</p>
+                                                <div>
+                                                     <a role="button" class="btn btn-sm btn-success"
+                                                        data-toggle="collapse" href="#collapseExample{{ comment.pk }}"
+                                                        aria-expanded="false" aria-controls="collapseExample{{ comment.pk }}">
+                                                        Reply
+                                                    </a>
+                                                </div>
+                                                <div class="collapse m-0 p-0" id="collapseExample{{ comment.pk }}">
+                                                    <div class="card card-body m-0 p-0">
+                                                    <!-- Comment form-->
+                                                        <form class="mb-4" id="commentOfComment-form" method="post"
+                                                            action="{{ post.get_absolute_url }}comment/{{ comment.pk }}/new_commentofcomment/">
+                                                            {% csrf_token %}
+                                                            <div class="form-group">
+                                                                {{ commentofComment_form | crispy }}
+                                                            </div>
+                                                            <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                                                            <!--   button 실행하면, form action 실행 , -->
+
+                                                        </form>
+                                                    </div>
+                                                </div>
                                                 {% if comment.created_at != comment.modified_at %}
                                                     <p class="text-muted float-right">
                                                         <small>Updated : {{comment.modified_at}}</small>
                                                     </p>
                                                 {% endif %}
+                                                {% if comment.commentofcomment_set.exists %}
+                                                    {% for coc in comment.commentofcomment_set.iterator  %}
+                                                    <p class="ml-3">
+                                                        <i class="fa-solid fa-arrow-right"></i>
+                                                        <small>{{ coc.content }}</small>
+                                                        <small class="text-muted">{{ coc.author }} | {{ coc.modified_at }}</small>
+                                                        {% if user.is_authenticated and coc.author == user %}
+                                                            <a role="button" class="btn btn-sm btn-outline-info"
+                                                               href="/blog/update_coc/{{ coc.pk }}/">
+                                                                수정
+                                                            </a>
+                                                            <a role="button" class="btn btn-sm btn-outline-danger"
+                                                                data-toggle="modal" data-target="#deleteModal-coc-{{ coc.pk }}" href="#">
+                                                                삭제
+                                                            </a>
+                                                            <!--          대댓 삭제 모달-->
+                                                            <div class="modal fade" id="deleteModal-coc-{{ coc.pk }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel1"><b>삭제하시겠습니까?</b></h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <!-- 버튼 -->
+                                                                        <div class="modal-body">
+                                                                            <h6>{{ coc.author }} - {{ coc.modified_at }}</h6>
+                                                                            <del>{{ coc.content }}</del>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                                                                            <a role="button" class="btn btn-secondary" href="/blog/delete_coc/{{ coc.pk }}/">
+                                                                            삭제</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--          대댓 삭제 모달 끝-->
+                                                        {% endif %}
+                                                    </p>
+                                                    {% endfor %}
+                                                {% endif %}
                                             </div>
-
                                         </div>
                                    </div>
                                   {% endfor %}

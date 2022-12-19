@@ -2,20 +2,20 @@
 {% load crispy_forms_tags %}
 
 {% block head_title %}
-    Edit Comment - Blog
+   대댓글 수정
 {% endblock %}
 
 {% block main_area %}
-    <h1>Edit Comment</h1>
-    <hr/>
+
+    <h1>Edit Comment of Comment</h1>
+    <hr>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-        {{form|crispy}}
+        {{ form | crispy }}
 
-        <br/>
-        <button type="submit" class="btn btn-primary float-right">Submit</button>
+        <br>
+        <button type="submit" class="btn btn-secondary float-right">완료</button>
     </form>
-    {{ form.media }}
     <br><br>
 {% endblock %}
