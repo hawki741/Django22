@@ -83,5 +83,22 @@ class Comment(models.Model):
     def get_avatar_url(self):
         if self.author.socialaccount_set.exists():
             return self.author.socialaccount_set.first().get_avatar_url()
+        elif self.author.is_superuser or self.author.is_staff:
+            img = "/static/blog/images/staff_profile.png"
+            return img
         else:
-            return 'https://dummyimage.com/50x50/ced4da/6c757d.jpg'
+            return f'https://doitdjango.com/avatar/id/1398/071b01be365056e8/svg/{self.author.email}'
+
+class CommentOfComment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+    parent_Comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.author} : {self.content}'
+
+    def get_absolute_url(self):
+        return f'{self.parent_Comment.get_absolute_url()}'
+
